@@ -1,6 +1,6 @@
 # @deno/otel
 
-[![JSR](https://jsr.io/badges/@<scope>/<package>)](https://jsr.io/@<scope>/<package>)
+[![JSR](https://jsr.io/badges/@deno/otel)](https://jsr.io/@deno/otel)
 
 Registers the `Deno.tracing` API as an exporter with the OpenTelemetry library.
 
