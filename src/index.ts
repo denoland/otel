@@ -1,34 +1,26 @@
 // Copyright 2024-2024 the Deno authors. All rights reserved. MIT license.
 
 import { context } from "npm:@opentelemetry/api@1";
-import { Resource } from "npm:@opentelemetry/resources@1";
-import {
-  ATTR_SERVICE_NAME,
-  ATTR_SERVICE_VERSION,
-} from "npm:@opentelemetry/semantic-conventions@1";
 import {
   BasicTracerProvider,
   SimpleSpanProcessor,
 } from "npm:@opentelemetry/sdk-trace-base@1";
 
+// @ts-ignore Deno.telemetry is not typed yet
+const telemetry = Deno.telemetry ?? Deno.tracing;
+
 /**
- * Register `Deno.tracing` with the OpenTelemetry library.
+ * Register `Deno.telemetry` with the OpenTelemetry library.
  */
 export function register() {
   context.setGlobalContextManager(
-    // @ts-ignore Deno.tracing is not typed yet
-    new Deno.tracing.ContextManager(),
+    new telemetry.ContextManager() ?? telemetry.ContextManager(),
   );
 
-  const provider = new BasicTracerProvider({
-    resource: new Resource({
-      [ATTR_SERVICE_NAME]: "deno",
-      [ATTR_SERVICE_VERSION]: Deno.version.deno,
-    }),
-  });
+  const provider = new BasicTracerProvider({});
 
   // @ts-ignore Deno.tracing is not typed yet
-  const exporter = new Deno.tracing.SpanExporter();
+  const exporter = new telemetry.SpanExporter();
   provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
 
   provider.register();
