@@ -2,7 +2,7 @@
 
 [![JSR](https://jsr.io/badges/@deno/otel)](https://jsr.io/@deno/otel)
 
-Registers the `Deno.tracing` API as an exporter with the OpenTelemetry library.
+Registers the `Deno.telemetry` API as an exporter with the OpenTelemetry library.
 
 # Try it
 
