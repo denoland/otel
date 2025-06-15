@@ -8,7 +8,7 @@
   "tasks": {
     "check:license": "deno run -A tools/check_license.ts",
     "check:docs": "deno doc --lint src/index.ts",
-    "check": "deno task check:license",
+    "check": "deno task check:license && deno task check:docs",
     "ok": "deno fmt --check && deno lint && deno task check"
   },
   "imports": {
