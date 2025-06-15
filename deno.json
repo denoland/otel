@@ -10,5 +10,8 @@
     "check:docs": "deno doc --lint src/index.ts",
     "check": "deno task check:license --check",
     "ok": "deno fmt --check && deno lint && deno task check"
+  },
+  "imports": {
+    "@kt3k/license-checker": "jsr:@kt3k/license-checker@^3.3.1"
   }
 }
