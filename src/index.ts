@@ -6,22 +6,15 @@ import {
   SimpleSpanProcessor,
 } from "npm:@opentelemetry/sdk-trace-base@1";
 
-// @ts-ignore Deno.telemetry is not typed yet
-const telemetry = Deno.telemetry ?? Deno.tracing;
+const telemetry = Deno.telemetry;
 
 /**
  * Register `Deno.telemetry` with the OpenTelemetry library.
  */
 export function register() {
-  context.setGlobalContextManager(
-    new telemetry.ContextManager() ?? telemetry.ContextManager(),
-  );
+  context.setGlobalContextManager(telemetry.contextManager());
 
-  const provider = new BasicTracerProvider({});
-
-  // @ts-ignore Deno.tracing is not typed yet
-  const exporter = new telemetry.SpanExporter();
-  provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
-
-  provider.register();
+  new BasicTracerProvider({
+    spanProcessors: [new SimpleSpanProcessor(telemetry.tracerProvider())],
+  }).register();
 }
